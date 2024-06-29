@@ -20,6 +20,11 @@ public class ProductsRepository(AppDbContext dbContext) : IProductsRepository
     };
   }
 
+  public async Task<Product?> GetProductByIdAsync(int id)
+  {
+    return await _dbContext.Products.FindAsync(id);
+  }
+
   public async Task AddProductAsync(Product product)
   {
     await _dbContext.Products.AddAsync(product);
