@@ -10,13 +10,22 @@ const Paper = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const handleDelete = async () => {
-    await ProductsService.fetchProducts();
+    if (data?.products.length === 0) prevPage();
+    await ProductsService.fetchProducts(currentPage);
     setData(ProductsService.getProducts());
   };
 
   const handleAdd = async () => {
-    await ProductsService.fetchProducts();
+    await ProductsService.fetchProducts(currentPage);
     setData(ProductsService.getProducts());
+  };
+
+  const prevPage = () => {
+    if (currentPage !== 1) setCurrentPage((prev) => prev - 1);
+  };
+
+  const nextPage = () => {
+    if (currentPage < data!.totalPages) setCurrentPage((prev) => prev + 1);
   };
 
   useEffect(() => {
@@ -36,7 +45,12 @@ const Paper = () => {
         <NewItemForm onAdd={handleAdd} />
       </div>
       <List products={data?.products} onDelete={handleDelete} />
-      <Paginator currentPage={currentPage} totalPages={data?.totalPages} />
+      <Paginator
+        currentPage={currentPage}
+        totalPages={data?.totalPages}
+        prevPage={prevPage}
+        nextPage={nextPage}
+      />
     </div>
   );
 };

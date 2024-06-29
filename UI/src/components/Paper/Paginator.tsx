@@ -1,17 +1,21 @@
 const Paginator = ({
   currentPage,
   totalPages,
+  prevPage,
+  nextPage,
 }: {
   currentPage: number;
   totalPages: number | null | undefined;
+  prevPage: () => void;
+  nextPage: () => void;
 }) => {
   return totalPages ? (
     <div className="flex items-center gap-4 justify-end w-full">
-      <button>{"<"}</button>
+      <button onClick={prevPage}>{"<"}</button>
       <div>
         {currentPage} / {totalPages}
       </div>
-      <button>{">"}</button>
+      <button onClick={nextPage}>{">"}</button>
     </div>
   ) : null;
 };
