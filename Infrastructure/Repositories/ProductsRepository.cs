@@ -15,7 +15,7 @@ public class ProductsRepository(AppDbContext dbContext) : IProductsRepository
 
     return new PaginatedProducts
     {
-      Products = paginatedProducts,
+      Products = paginatedProducts.OrderBy(p => p.Id),
       TotalPages = totalPages
     };
   }

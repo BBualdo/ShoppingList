@@ -32,7 +32,7 @@ namespace API.Controllers
             return NoContent();
         }
 
-        [HttpDelete("id:int")]
+        [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteProduct(int id)
         {
             await _productsService.DeleteAsync(id);

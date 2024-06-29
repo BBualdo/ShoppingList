@@ -1,18 +1,28 @@
 import { useState } from "react";
 import { Product } from "../../../models/Product";
-import { url } from "../../../config/url";
+import ProductsService from "../../../services/ProductsService";
 
-const ListItem = ({ product }: { product: Product }) => {
+const ListItem = ({
+  product,
+  onDelete,
+}: {
+  product: Product;
+  onDelete: () => void;
+}) => {
   const [isPickedUp, setIsPickedUp] = useState(product.isPickedUp);
 
-  const onPickupChange = (): void => {
+  const onPickupChange = async (): Promise<void> => {
     const updatedIsPickedUp = !isPickedUp;
     setIsPickedUp(updatedIsPickedUp);
-    fetch(url + "products", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...product, isPickedUp: updatedIsPickedUp }),
+    await ProductsService.updateProduct({
+      ...product,
+      isPickedUp: updatedIsPickedUp,
     });
+  };
+
+  const handleDelete = async (product: Product) => {
+    await ProductsService.deleteProduct(product);
+    onDelete();
   };
 
   return (
@@ -26,7 +36,10 @@ const ListItem = ({ product }: { product: Product }) => {
         {product.title}
       </p>
 
-      <button className="bg-red-300 hover:bg-red-500 transition-all duration-200 text-white font-bold px-2 py-1">
+      <button
+        onClick={async () => await handleDelete(product)}
+        className="bg-red-300 hover:bg-red-500 transition-all duration-200 text-white font-bold px-2 py-1"
+      >
         Delete
       </button>
     </div>

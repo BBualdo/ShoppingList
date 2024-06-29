@@ -1,9 +1,17 @@
 import { Product } from "../../../models/Product";
 import ListItem from "./ListItem";
 
-const List = ({ products }: { products: Product[] | null | undefined }) => {
+const List = ({
+  products,
+  onDelete,
+}: {
+  products: Product[] | null | undefined;
+  onDelete: () => void;
+}) => {
   const productsElement = products?.length
-    ? products.map((product) => <ListItem key={product.id} product={product} />)
+    ? products.map((product) => (
+        <ListItem key={product.id} product={product} onDelete={onDelete} />
+      ))
     : null;
 
   const emptyList = (

@@ -5,17 +5,15 @@ const Paginator = ({
   currentPage: number;
   totalPages: number | null | undefined;
 }) => {
-  return (
-    totalPages && (
-      <div className="flex items-center gap-4 justify-end w-full">
-        <button>{"<"}</button>
-        <div>
-          {currentPage} / {totalPages}
-        </div>
-        <button>{">"}</button>
+  return totalPages ? (
+    <div className="flex items-center gap-4 justify-end w-full">
+      <button>{"<"}</button>
+      <div>
+        {currentPage} / {totalPages}
       </div>
-    )
-  );
+      <button>{">"}</button>
+    </div>
+  ) : null;
 };
 
 export default Paginator;
