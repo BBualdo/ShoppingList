@@ -1,10 +1,20 @@
-const Paginator = () => {
+const Paginator = ({
+  currentPage,
+  totalPages,
+}: {
+  currentPage: number;
+  totalPages: number | null | undefined;
+}) => {
   return (
-    <div className="flex items-center gap-4 justify-end w-full">
-      <button>{"<"}</button>
-      <div>1 / 1</div>
-      <button>{">"}</button>
-    </div>
+    totalPages && (
+      <div className="flex items-center gap-4 justify-end w-full">
+        <button>{"<"}</button>
+        <div>
+          {currentPage} / {totalPages}
+        </div>
+        <button>{">"}</button>
+      </div>
+    )
   );
 };
 

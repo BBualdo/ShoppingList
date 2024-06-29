@@ -9,7 +9,7 @@ const ListItem = ({ product }: { product: Product }) => {
   };
 
   return (
-    <div className="flex items-center mt-8 justify-between w-full">
+    <div className="flex items-center mt-4 justify-between w-full">
       <p
         onClick={onPickupChange}
         className={`font-playwrite border-b select-none cursor-pointer border-black w-full mr-10 ${
