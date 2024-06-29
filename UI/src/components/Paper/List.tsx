@@ -12,9 +12,19 @@ const List = ({ products }: { products: Product[] | null | undefined }) => {
     </p>
   );
 
+  const productsError = (
+    <p className="text-center text-xl text-red-400 font-bold">
+      Can't get products.
+    </p>
+  );
+
   return (
     <div className="w-full mt-8 flex-1 justify-start">
-      {products && products.length === 0 ? emptyList : productsElement}
+      {!products
+        ? productsError
+        : products && products.length === 0
+        ? emptyList
+        : productsElement}
     </div>
   );
 };

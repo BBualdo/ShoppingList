@@ -1,11 +1,18 @@
 import { useState } from "react";
 import { Product } from "../../../models/Product";
+import { url } from "../../../config/url";
 
 const ListItem = ({ product }: { product: Product }) => {
   const [isPickedUp, setIsPickedUp] = useState(product.isPickedUp);
 
   const onPickupChange = (): void => {
-    setIsPickedUp((prev) => !prev);
+    const updatedIsPickedUp = !isPickedUp;
+    setIsPickedUp(updatedIsPickedUp);
+    fetch(url + "products", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...product, isPickedUp: updatedIsPickedUp }),
+    });
   };
 
   return (
@@ -18,14 +25,10 @@ const ListItem = ({ product }: { product: Product }) => {
       >
         {product.title}
       </p>
-      <div className="flex items-center gap-4">
-        <button className="px-2 py-1 bg-yellow-400 hover:bg-yellow-300 transition-all duration-200 text-white font-bold">
-          Edit
-        </button>
-        <button className="bg-red-300 hover:bg-red-500 transition-all duration-200 text-white font-bold px-2 py-1">
-          Delete
-        </button>
-      </div>
+
+      <button className="bg-red-300 hover:bg-red-500 transition-all duration-200 text-white font-bold px-2 py-1">
+        Delete
+      </button>
     </div>
   );
 };
